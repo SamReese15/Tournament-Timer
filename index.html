@@ -25,9 +25,14 @@
         <div class="break-display" id="break" style="display:none;">Break</div>
     </main>
 
-    <div class="pause">
-        <button id="pauseBtn" type="button">Pause</button>
-    </div>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button id="prevBtn">Previous Level</button>
+        <button id="startBtn">Start</button>
+        <button id="pauseBtn">Pause</button>
+        <button id="nextBtn">Next Level</button>
+        <button id="resetBtn">Reset</button>
+    </nav>
 
     <!-- Dropdown / Settings -->
     <section id="editor">
@@ -89,6 +94,16 @@
         </div>
 
     </section>
+
+    <!-- Reset Modal -->
+    <div id="resetModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <p>Do you want to restart the entire tournament or just reset the current level?</p>
+            <button id="restartTournamentBtn">Restart Tournament</button>
+            <button id="resetLevelBtn">Reset Level</button>
+            <button id="cancelResetBtn">Cancel</button>
+        </div>
+    </div>
 
     <script src="main.js"></script>
 </body>
