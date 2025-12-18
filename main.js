@@ -138,16 +138,38 @@ document.addEventListener("DOMContentLoaded", () => {
         tournamentSettings.levels.forEach((lvl, i) => {
             const div = document.createElement("div");
             div.className = "level-item";
-            div.innerHTML = `${lvl.type === "break" ? "Break" : `SB: ${lvl.sb} BB: ${lvl.bb} ${lvl.ante ? "| Ante: "+lvl.ante : ""}`} - ${lvl.minutes} min
+            div.innerHTML = `${lvl.type === "break" ? "Break" : `SB: ${lvl.sb} BB: ${lvl.bb} ${lvl.ante ? "| Ante: " + lvl.ante : ""}`} - ${lvl.minutes} min
+             <span class="level-buttons">
                 <button class="deleteBtn">❌</button>
                 <button class="upBtn">⬆</button>
                 <button class="downBtn">⬇</button>
+                </span>
             `;
             levelList.appendChild(div);
 
             // Delete
             div.querySelector(".deleteBtn").addEventListener("click", () => {
+                // Stop timer
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+
                 tournamentSettings.levels.splice(i, 1);
+
+                // Fix index if needed
+                if (currentLevelIndex >= tournamentSettings.levels.length) {
+                    currentLevelIndex = tournamentSettings.levels.length - 1;
+                }
+
+                remainingTime = 0;
+
+                if (tournamentSettings.levels.length > 0) {
+                    showLevel(currentLevelIndex);
+                } else {
+                    timerDisplay.textContent = "00:00";
+                }
+
                 localStorage.setItem("tournamentSettings", JSON.stringify(tournamentSettings));
                 updateLevelList();
             });
@@ -155,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Move up
             div.querySelector(".upBtn").addEventListener("click", () => {
                 if (i === 0) return;
-                [tournamentSettings.levels[i-1], tournamentSettings.levels[i]] = [tournamentSettings.levels[i], tournamentSettings.levels[i-1]];
+                [tournamentSettings.levels[i - 1], tournamentSettings.levels[i]] = [tournamentSettings.levels[i], tournamentSettings.levels[i - 1]];
                 localStorage.setItem("tournamentSettings", JSON.stringify(tournamentSettings));
                 updateLevelList();
             });
@@ -163,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Move down
             div.querySelector(".downBtn").addEventListener("click", () => {
                 if (i === tournamentSettings.levels.length - 1) return;
-                [tournamentSettings.levels[i], tournamentSettings.levels[i+1]] = [tournamentSettings.levels[i+1], tournamentSettings.levels[i]];
+                [tournamentSettings.levels[i], tournamentSettings.levels[i + 1]] = [tournamentSettings.levels[i + 1], tournamentSettings.levels[i]];
                 localStorage.setItem("tournamentSettings", JSON.stringify(tournamentSettings));
                 updateLevelList();
             });
@@ -203,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tournamentSettings.levels[currentLevelIndex]) return;
         if (timerInterval) return; // already running
         isPaused = false;
-        pauseBtn.textContent = "Pause";
 
         timerInterval = setInterval(() => {
             if (!isPaused) {
@@ -211,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateTimerDisplay();
 
                 if (remainingTime < 0) {
+                    playBuzzer();
                     clearInterval(timerInterval);
                     timerInterval = null;
                     if (currentLevelIndex < tournamentSettings.levels.length - 1) {
@@ -237,11 +259,12 @@ document.addEventListener("DOMContentLoaded", () => {
     pauseBtn.addEventListener("click", () => {
         if (!timerInterval) return;
         isPaused = !isPaused;
-        pauseBtn.textContent = isPaused ? "Resume" : "Pause";
+        pauseBtn.textContent = isPaused ? "Resume" : "❚❚";
     });
 
     nextBtn.addEventListener("click", () => {
         if (currentLevelIndex < tournamentSettings.levels.length - 1) {
+            playBuzzer();
             currentLevelIndex++;
             if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
             remainingTime = 0;
@@ -256,6 +279,41 @@ document.addEventListener("DOMContentLoaded", () => {
             remainingTime = 0;
             showLevel(currentLevelIndex);
         }
+    });
+
+    // ----------------------
+    // Timer sound
+    // ----------------------
+
+    const buzzerSelect = document.getElementById("buzzerSelect");
+
+    // Load saved buzzer
+    let selectedBuzzer = localStorage.getItem("selectedBuzzer") || "sounds/buzzer1.mp3";
+    buzzerSelect.value = selectedBuzzer;
+
+    buzzerSelect.addEventListener("change", () => {
+        selectedBuzzer = buzzerSelect.value;
+        localStorage.setItem("selectedBuzzer", selectedBuzzer);
+    });
+
+    let buzzerAudio = new Audio(selectedBuzzer);
+
+    function playBuzzer() {
+        buzzerAudio.currentTime = 0;
+        buzzerAudio.play().catch(() => { });
+    }
+
+    buzzerSelect.addEventListener("change", () => {
+        selectedBuzzer = buzzerSelect.value;
+        buzzerAudio = new Audio(selectedBuzzer);
+        localStorage.setItem("selectedBuzzer", selectedBuzzer);
+    });
+
+
+    const testBuzzerBtn = document.getElementById("testBuzzerBtn");
+
+    testBuzzerBtn.addEventListener("click", () => {
+        playBuzzer();
     });
 
     // ----------------------

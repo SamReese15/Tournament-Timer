@@ -36,11 +36,11 @@
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <button id="prevBtn"><</button>
-        <button id="startBtn">►</button>
-        <button id="pauseBtn">❚❚</button>
-        <button id="nextBtn">></button>
-        <button id="resetBtn">⟳</button>
+                <button id="prevBtn"><</button>
+                <button id="startBtn">►</button>
+                <button id="pauseBtn">❚❚</button>
+                <button id="nextBtn">></button>
+                <button id="resetBtn">⟳</button>
     </nav>
 
     <!-- Dropdown / Settings -->
@@ -95,6 +95,16 @@
             </div>
         </div>
 
+        <div class="setting-row">
+            <label for="buzzerSelect">Buzzer</label>
+            <select id="buzzerSelect">
+                <option value="sounds/buzzer1.mp3">Buzzer option 1</option>
+                <option value="sounds/buzzer2.mp3">Slot Machine</option>
+                <option value="sounds/buzzer3.mp3">Censor Bleep</option>
+                <option value="sounds/buzzer4.mp3">Buzzer option 4</option>
+            </select>
+            <button id="testBuzzerBtn">▶ Test</button>
+        </div>
         <button id="addLevel">Add Level</button>
         <button id="addBreak">Add Break</button>
 

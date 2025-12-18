@@ -101,6 +101,10 @@ body {
   color: white;
 }
 
+.level-buttons {
+    float: right;
+}
+
 .timer-container {
   display: flex;
   flex-direction: column;
@@ -284,6 +288,21 @@ body {
     font-weight: normal;
     text-align: center;
     color: #fff;
+}
+
+#testBuzzerBtn {
+  margin-left: 6px;
+  font-size: 14px;
+  line-height: 1;
+  width: auto;
+}
+
+.level-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #444;
 }
 
 /* Apply to Ante as well */
