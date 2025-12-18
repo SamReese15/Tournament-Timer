@@ -15,6 +15,7 @@ position: absolute;
 left: 50%;          /* horizontal center */
   transform: translateX(-50%);
   text-align: center;
+  font-size: 45px;
 }
 
 h2 {
