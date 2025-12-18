@@ -199,10 +199,81 @@ body {
   cursor: pointer;
 }
 
+/* ----------------------
+   Bottom Navigation
+----------------------- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around; /* evenly space buttons */
+  align-items: center;
+  background: linear-gradient(90deg, #ff8146, #ffbb33df);
+  padding: 12px 0;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
+  z-index: 1000;
+}
 
-/* Mobile View */
+.bottom-nav button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 12px 0;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.2s, background 0.2s;
+}
+
+/* Color coding buttons for clarity */
+.bottom-nav #prevBtn {
+  background: black
+}
+.bottom-nav #startBtn {
+  background: black
+}
+.bottom-nav #pauseBtn {
+  background: black
+}
+.bottom-nav #nextBtn {
+  background: black
+}
+.bottom-nav #resetBtn {
+  flex: 0;                    /* do not stretch */
+  font-size: 25px;
+  padding: 6px 12px;
+  width: auto;                /* shrink to content */
+  background: black;
+  border-radius: 12px;
+  color: red;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.bottom-nav button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Mobile responsiveness */
 @media (max-width: 767px) {
+  .bottom-nav button {
+    font-size: 16px;
+    padding: 10px 0;
+    margin: 0 3px;
+  }
 
+  .timer-display {
+    font-size: 80px;
+    padding: 15px 30px;
+  }
 
-
+  .blind {
+    font-size: 28px;
+    padding: 10px 20px;
+  }
 }

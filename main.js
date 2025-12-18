@@ -118,9 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const div = document.createElement("div");
             div.className = "level-item";
             div.innerHTML = `${lvl.type === "break" ? "Break" : `SB: ${lvl.sb} BB: ${lvl.bb} ${lvl.ante ? "| Ante: "+lvl.ante : ""}`} - ${lvl.minutes} min
-                <button class="deleteBtn">🗑</button>
-                <button class="upBtn">⬆️</button>
-                <button class="downBtn">⬇️</button>
+                <button class="deleteBtn">❌</button>
+                <button class="upBtn">⬆</button>
+                <button class="downBtn">⬇</button>
             `;
             levelList.appendChild(div);
 
@@ -220,48 +220,54 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     nextBtn.addEventListener("click", () => {
-        if (currentLevelIndex < tournamentSettings.levels.length - 1) {
-            currentLevelIndex++;
-            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-            showLevel(currentLevelIndex);
-        }
-    });
+    if (currentLevelIndex < tournamentSettings.levels.length - 1) {
+        currentLevelIndex++;
+        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        remainingTime = 0; // reset time for new level
+        showLevel(currentLevelIndex);
+    }
+});
 
-    prevBtn.addEventListener("click", () => {
-        if (currentLevelIndex > 0) {
-            currentLevelIndex--;
-            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-            showLevel(currentLevelIndex);
-        }
-    });
+prevBtn.addEventListener("click", () => {
+    if (currentLevelIndex > 0) {
+        currentLevelIndex--;
+        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        remainingTime = 0; // reset time for new level
+        showLevel(currentLevelIndex);
+    }
+});
 
     // ----------------------
     // Reset modal
     // ----------------------
-    const resetButton = document.createElement("button");
-    resetButton.textContent = "Reset";
-    resetButton.id = "resetBtn";
-    document.querySelector(".controls").appendChild(resetButton);
+    const resetBtn = document.getElementById("resetBtn");
 
-    resetButton.addEventListener("click", () => resetModal.style.display = "block");
-    cancelResetBtn.addEventListener("click", () => resetModal.style.display = "none");
+resetBtn.addEventListener("click", () => resetModal.style.display = "block");
 
-    resetLevelBtn.addEventListener("click", () => {
-        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-        const level = tournamentSettings.levels[currentLevelIndex];
-        remainingTime = parseInt(level.minutes) * 60;
-        showLevel(currentLevelIndex);
-        resetModal.style.display = "none";
-    });
+cancelResetBtn.addEventListener("click", () => resetModal.style.display = "none");
 
-    restartTournamentBtn.addEventListener("click", () => {
-        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-        currentLevelIndex = 0;
-        const level = tournamentSettings.levels[currentLevelIndex];
-        remainingTime = parseInt(level.minutes) * 60;
-        showLevel(currentLevelIndex);
-        resetModal.style.display = "none";
-    });
+resetLevelBtn.addEventListener("click", () => {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    const level = tournamentSettings.levels[currentLevelIndex];
+    remainingTime = parseInt(level.minutes) * 60; // reset time for current level
+    showLevel(currentLevelIndex);
+    resetModal.style.display = "none";
+});
+
+restartTournamentBtn.addEventListener("click", () => {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    currentLevelIndex = 0;
+    const level = tournamentSettings.levels[currentLevelIndex];
+    remainingTime = parseInt(level.minutes) * 60; // reset time for first level
+    showLevel(currentLevelIndex);
+    resetModal.style.display = "none";
+});
 
     // ----------------------
     // Initialize
