@@ -1,13 +1,20 @@
 
 .toolBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   background: linear-gradient(90deg, #ff8146, #ffbb33df);
   padding: 12px 16px;
   color: white;
   font-size: 35px;
   font-weight: bold;
+}
+
+.title {
+position: absolute;
+left: 50%;          /* horizontal center */
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 h2 {
