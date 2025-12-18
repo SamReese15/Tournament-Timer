@@ -114,7 +114,7 @@ body {
   color: white;
   margin-bottom: 30px;
   padding: 20px 40px;
-  background: linear-gradient(90deg,#006400, #00FF00);
+  background: linear-gradient(135deg, #FF9900, #FFD700);
   border-radius: 20px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.5);
 }
@@ -133,7 +133,7 @@ body {
 }
 
 .small-blind {
-  background: linear-gradient(135deg, #009900, #66FF66);
+  background: linear-gradient(135deg, #FF9900, #FFD700);
 }
 
 .big-blind {
@@ -265,6 +265,36 @@ body {
   transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
+
+/* ----------------------
+   Blind and Ante Number / Label Styling
+----------------------- */
+.blind-number {
+    display: block;          /* stack above label */
+    font-size: 48px;         /* bigger number */
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.blind-label {
+    display: block;
+    font-size: 18px;         /* smaller label */
+    font-weight: normal;
+    text-align: center;
+    color: #fff;
+}
+
+/* Apply to Ante as well */
+.ante-display .blind-number {
+    font-size: 36px;         /* slightly smaller than SB/BB */
+}
+
+.ante-display .blind-label {
+    font-size: 16px;
+}
+
 
 /* Mobile responsiveness */
 @media (max-width: 767px) {

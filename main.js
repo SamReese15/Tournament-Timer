@@ -85,17 +85,38 @@ document.addEventListener("DOMContentLoaded", () => {
         const level = tournamentSettings.levels[index];
 
         if (level.type === "level") {
-            sbDisplay.textContent = `Small Blind: ${level.sb}`;
-            bbDisplay.textContent = `Big Blind: ${level.bb}`;
-            anteDisplay.style.display = level.ante ? "block" : "none";
-            anteDisplay.textContent = level.ante ? `Ante: ${level.ante}` : "";
+            // Small Blind
+            const sbNum = sbDisplay.querySelector(".blind-number");
+            const sbLbl = sbDisplay.querySelector(".blind-label");
+            sbNum.textContent = level.sb;
+            sbLbl.textContent = "Small Blind";
+
+            // Big Blind
+            const bbNum = bbDisplay.querySelector(".blind-number");
+            const bbLbl = bbDisplay.querySelector(".blind-label");
+            bbNum.textContent = level.bb;
+            bbLbl.textContent = "Big Blind";
+
+            // Ante
+            if (level.ante) {
+                anteDisplay.style.display = "block";
+                anteDisplay.textContent = `Ante: ${level.ante}`;
+            } else {
+                anteDisplay.style.display = "none";
+                anteDisplay.textContent = "";
+            }
+
             if (remainingTime === 0) remainingTime = parseInt(level.minutes) * 60;
         } else if (level.type === "break") {
-            sbDisplay.textContent = "";
-            bbDisplay.textContent = "";
+            sbDisplay.querySelector(".blind-number").textContent = "";
+            sbDisplay.querySelector(".blind-label").textContent = "";
+            bbDisplay.querySelector(".blind-number").textContent = "";
+            bbDisplay.querySelector(".blind-label").textContent = "";
             anteDisplay.style.display = "none";
+            anteDisplay.textContent = "";
             if (remainingTime === 0) remainingTime = parseInt(level.minutes) * 60;
         }
+
         updateTimerDisplay();
     }
 
@@ -220,54 +241,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     nextBtn.addEventListener("click", () => {
-    if (currentLevelIndex < tournamentSettings.levels.length - 1) {
-        currentLevelIndex++;
-        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-        remainingTime = 0; // reset time for new level
-        showLevel(currentLevelIndex);
-    }
-});
+        if (currentLevelIndex < tournamentSettings.levels.length - 1) {
+            currentLevelIndex++;
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+            remainingTime = 0;
+            showLevel(currentLevelIndex);
+        }
+    });
 
-prevBtn.addEventListener("click", () => {
-    if (currentLevelIndex > 0) {
-        currentLevelIndex--;
-        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-        remainingTime = 0; // reset time for new level
-        showLevel(currentLevelIndex);
-    }
-});
+    prevBtn.addEventListener("click", () => {
+        if (currentLevelIndex > 0) {
+            currentLevelIndex--;
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+            remainingTime = 0;
+            showLevel(currentLevelIndex);
+        }
+    });
 
     // ----------------------
     // Reset modal
     // ----------------------
     const resetBtn = document.getElementById("resetBtn");
 
-resetBtn.addEventListener("click", () => resetModal.style.display = "block");
+    resetBtn.addEventListener("click", () => resetModal.style.display = "block");
+    cancelResetBtn.addEventListener("click", () => resetModal.style.display = "none");
 
-cancelResetBtn.addEventListener("click", () => resetModal.style.display = "none");
+    resetLevelBtn.addEventListener("click", () => {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+        const level = tournamentSettings.levels[currentLevelIndex];
+        remainingTime = parseInt(level.minutes) * 60;
+        showLevel(currentLevelIndex);
+        resetModal.style.display = "none";
+    });
 
-resetLevelBtn.addEventListener("click", () => {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-    }
-    const level = tournamentSettings.levels[currentLevelIndex];
-    remainingTime = parseInt(level.minutes) * 60; // reset time for current level
-    showLevel(currentLevelIndex);
-    resetModal.style.display = "none";
-});
-
-restartTournamentBtn.addEventListener("click", () => {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-    }
-    currentLevelIndex = 0;
-    const level = tournamentSettings.levels[currentLevelIndex];
-    remainingTime = parseInt(level.minutes) * 60; // reset time for first level
-    showLevel(currentLevelIndex);
-    resetModal.style.display = "none";
-});
+    restartTournamentBtn.addEventListener("click", () => {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+        currentLevelIndex = 0;
+        const level = tournamentSettings.levels[currentLevelIndex];
+        remainingTime = parseInt(level.minutes) * 60;
+        showLevel(currentLevelIndex);
+        resetModal.style.display = "none";
+    });
 
     // ----------------------
     // Initialize

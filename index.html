@@ -18,10 +18,19 @@
     <main class="timer-container">
         <div class="timer-display" id="timer">Time</div>
         <div class="blinds-display">
-            <div class="blind small-blind" id="sb">Small Blind</div>
-            <div class="blind big-blind" id="bb">Big Blind</div>
+            <div class="blind small-blind" id="sb">
+                <span class="blind-number"></span>
+                <span class="blind-label">Small Blind</span>
+            </div>
+            <div class="blind big-blind" id="bb">
+                <span class="blind-number"></span>
+                <span class="blind-label">Big Blind</span>
+            </div>
         </div>
-        <div class="ante-display" id="ante" style="display:none;">Ante</div>
+        <div class="ante-display" id="ante" style="display:none;">
+            <span class="blind-number"></span>
+            <span class="blind-label">Ante</span>
+        </div>
         <div class="break-display" id="break" style="display:none;">Break</div>
     </main>
 
