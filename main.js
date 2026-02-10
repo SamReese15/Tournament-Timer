@@ -19,19 +19,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----------------------
     // Background selector
     // ----------------------
-    const bgOptions = document.querySelectorAll(".bg-option");
-    const savedBg = localStorage.getItem("selectedBg");
-    if (savedBg) document.body.style.backgroundImage = `url(${savedBg})`;
-    bgOptions.forEach(img => {
-        if (img.getAttribute("src") === savedBg) img.classList.add("selected");
-        img.addEventListener("click", () => {
-            bgOptions.forEach(i => i.classList.remove("selected"));
-            img.classList.add("selected");
-            const src = img.getAttribute("src");
-            document.body.style.backgroundImage = `url(${src})`;
-            localStorage.setItem("selectedBg", src);
-        });
+    // Background selector
+const bgOptions = document.querySelectorAll(".bg-option");
+const savedBg = localStorage.getItem("selectedBg");
+
+bgOptions.forEach(img => {
+    if (img.getAttribute("src") === savedBg) img.classList.add("selected");
+
+    img.addEventListener("click", () => {
+        bgOptions.forEach(i => i.classList.remove("selected"));
+        img.classList.add("selected");
+
+        const src = img.getAttribute("src");
+        document.body.style.backgroundImage = `url(${src})`;
+        localStorage.setItem("selectedBg", src);
     });
+});
+
 
     // ----------------------
     // Inputs and displays

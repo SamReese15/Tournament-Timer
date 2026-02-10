@@ -3,7 +3,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background: linear-gradient(90deg, #ff8146, #ffbb33df);
+  background: linear-gradient(90deg, #1f7a4a, #3fbf7f);
   padding: 12px 16px;
   color: white;
   font-size: 35px;
@@ -69,6 +69,7 @@ h2 {
   font-size: 16px;
 }
 
+
 /* Ante display */
 .ante-display {
   display: none; /* hidden by default */
@@ -114,14 +115,25 @@ body {
 }
 
 .timer-display {
-  font-size: 120px;
+  font-size: 150px;
   font-weight: bold;
-  color: white;
+  color: #f4fff4;
   margin-bottom: 30px;
-  padding: 20px 40px;
-  background: linear-gradient(135deg, #FF9900, #FFD700);
+  padding: 30px 60px;
+
+  background: linear-gradient(
+    135deg,
+    #1f7a4a,
+    #3fbf7f
+  );
+
   border-radius: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.45),
+    inset 0 2px 6px rgba(255, 255, 255, 0.2);
+
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 }
 
 .blinds-display {
@@ -130,19 +142,28 @@ body {
 }
 
 .blind {
-  font-size: 36px;
+  font-size: 100px;
   font-weight: 600;
-  padding: 15px 30px;
-  border-radius: 15px;
+  padding: 50px 40px;
+  border-radius: 18px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 .small-blind {
-  background: linear-gradient(135deg, #FF9900, #FFD700);
+  background: linear-gradient(
+    135deg,
+    #1f7a4a,
+    #3fbf7f
+  );
+  font-size: 180px;
 }
 
 .big-blind {
-  background: linear-gradient(135deg, #FF9900, #FFD700);
+  background: linear-gradient(
+    135deg,
+    #1f7a4a,
+    #3fbf7f
+  );
 }
 
 .pause button {
@@ -222,7 +243,7 @@ body {
   display: flex;
   justify-content: space-around; /* evenly space buttons */
   align-items: center;
-  background: linear-gradient(90deg, #ff8146, #ffbb33df);
+  background: linear-gradient(90deg, #1f7a4a, #3fbf7f);
   padding: 12px 0;
   box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
   z-index: 1000;
@@ -285,8 +306,8 @@ body {
 
 .blind-label {
     display: block;
-    font-size: 18px;         /* smaller label */
-    font-weight: normal;
+    font-size: 50px;         /* smaller label */
+    font-weight: bold;
     text-align: center;
     color: #fff;
 }
